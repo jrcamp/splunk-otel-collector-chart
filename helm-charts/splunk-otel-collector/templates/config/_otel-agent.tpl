@@ -88,6 +88,7 @@ processors:
     detectors:
       - env
       {{- if eq .Values.platform "gcp" }}
+      - gke
       - gce
       {{- else if eq .Values.platform "aws" }}
       - ec2
@@ -156,7 +157,7 @@ service:
     # default traces pipeline
     traces:
       receivers: [otlp, jaeger, zipkin, opencensus]
-      processors: 
+      processors:
         - memory_limiter
         - resourcedetection
         - k8s_tagger
